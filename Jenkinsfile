@@ -3,6 +3,8 @@ pipeline {
     environment {
     DOCKER_REGISTRY = 099532347933.dkr.ecr.us-east-2.amazonaws.com
     APP_NAME = docker-hub
+    AWS_ACCESS_KEY_ID = AKIAROLEXDIO7FMT7FUX
+    AWS_SECRET_ACCESS_KEY = 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
     
 //     DOCKERHUB_CREDENTIALS = credentials('kandula-dockerhub')
 //     BRANCH = "${env.GIT_BRANCH}.${BUILD_NUMBER}"
