@@ -22,9 +22,10 @@ pipeline {
         }
         stage('login to dockerhub') {
             steps{
-                withAWS(credentials: 'jenkins_ECR_user', region: 'us-east-2') {
-                    sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 099532347933.dkr.ecr.us-east-2.amazonaws.com'
-                }
+                docker.withRegistry('https://1234567890.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-1:jenkins_ECR_user')
+//                 withAWS(credentials: 'jenkins_ECR_user', region: 'us-east-2') {
+//                     sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 099532347933.dkr.ecr.us-east-2.amazonaws.com'
+//                 }
 //                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
