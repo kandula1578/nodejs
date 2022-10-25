@@ -17,7 +17,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {
-                sh 'docker build -t kandula17/nodeapp:${params.Branch} . '
+                sh 'docker build -t kandula17/nodeapp:${Branch} . '
             }
         }
         stage('login to dockerhub') {
