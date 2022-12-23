@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+env:
+  FULL_NAME: sreenu
 
 jobs:
 
@@ -19,4 +21,5 @@ jobs:
       run: sudo docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       
     - name: print name
-      run: echo "$MY_NAME"
+      run: echo "$MY_NAME, $FULL_NAME"
+      
