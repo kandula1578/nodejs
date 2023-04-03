@@ -3,23 +3,35 @@ name: Docker Image CI
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-env:
-  FULL_NAME: sreenu
 
 jobs:
-
   build:
-
-    runs-on:
-        self-hosted
+    runs-on: [self-hosted, dev]
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: sudo docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-      
-    - name: print name
-      run: echo "$MY_NAME, $FULL_NAME"
-      
+    - name: Checkout Source code
+      id: checkout
+      run: echo "test"
+
+    - name: set lower case repository name
+      id: lc-repository
+      run: |
+           echo "REPOSITORY_LC=${REPOSITORY,,}" >>${GITHUB_ENV}
+      env:
+         REPOSITORY: '${{ github.repository }}'
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: 099532347933.dkr.ecr.us-east-2.amazonaws.com
+        GIT_BRANCH: ${{ github.ref_name }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }} 
+        aws ecr create-repository --repository-name ${{ env.REPOSITORY_LC }} || true
+        docker build -t ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:${{ env.GIT_BRANCH }} .
+        docker push ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:${{ env.GIT_BRANCH }}
+        docker system prune --force --filter "until=24h"
