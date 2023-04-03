@@ -30,7 +30,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        aws ecr get-login-password --region eu-central-1 | sudo docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }} 
+        aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }} 
         aws ecr create-repository --repository-name ${{ env.REPOSITORY_LC }} || true
         sudo docker build -t ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:${{ env.GIT_BRANCH }} .
         sudo docker push ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:${{ env.GIT_BRANCH }}
