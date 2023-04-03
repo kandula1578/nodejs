@@ -34,4 +34,4 @@ jobs:
         aws ecr create-repository --repository-name ${{ env.REPOSITORY_LC }} || true
         sudo docker build -t ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:${{ env.GIT_BRANCH }} .
         sudo docker push ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:${{ env.GIT_BRANCH }}
-        docker system prune --force --filter "until=24h"
+        sudo docker system prune --force --filter "until=24h"
