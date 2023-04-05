@@ -32,8 +32,8 @@ jobs:
         # be deployed to ECS.
         aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }} 
         aws ecr create-repository --repository-name ${{ env.REPOSITORY_LC }} || true
-        sudo docker build -t 099532347933.dkr.ecr.us-east-2.amazonaws.com/kandula1578/my-project:master .
-        sudo docker push 099532347933.dkr.ecr.us-east-2.amazonaws.com/kandula1578/my-project:master
-        # sudo docker build -t ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:master .
-        # sudo docker push ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:master
+        # sudo docker build -t 099532347933.dkr.ecr.us-east-2.amazonaws.com/kandula1578/my-project:master .
+        # sudo docker push 099532347933.dkr.ecr.us-east-2.amazonaws.com/kandula1578/my-project:master
+        sudo docker build -t ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:master .
+        sudo docker push ${{ env.ECR_REGISTRY }}/${{ env.REPOSITORY_LC }}:master
         sudo docker system prune --force --filter "until=24h"
