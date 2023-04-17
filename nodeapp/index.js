@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-console.log("testings");
+console.log("testingsss");
 
 app.get('/', function (req, res) {
     res.send('{ "response": "Hello, Welcome to Valaxy" }');
